@@ -74,7 +74,6 @@ const DetailBarang = () => {
         </div>
       ) : (
         <div className="flex flex-wrap justify-center py-20 px-10 bg-gray-900 min-h-screen">
-          {/* Image Section */}
           <div className="w-full md:w-1/2 p-4 flex justify-center">
             <img
               src={getBarang.foto_barang}
@@ -101,7 +100,6 @@ const DetailBarang = () => {
             </Modal>
           </div>
 
-          {/* Details Section */}
           <div className="w-full md:w-1/2 p-4 text-white">
             <h2 className="text-3xl font-bold mb-4">{getBarang.nama_barang}</h2>
             <p className="text-3xl font-semibold mb-2">
@@ -147,7 +145,6 @@ const DetailBarang = () => {
               </div>
             </Link>
 
-            {/* Ratings and Reviews Section */}
             <h3 className="text-2xl font-bold mt-10 mb-4">Ulasan Pelanggan</h3>
             <div className="bg-gray-800 p-4 rounded-lg">
               {reviews.length === 0 ? (

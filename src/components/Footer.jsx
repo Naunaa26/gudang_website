@@ -5,7 +5,6 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white p-8 mt-auto">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* About Us */}
         <div>
           <h2 className="text-lg font-semibold mb-4">About Us</h2>
           <p className="text-gray-400">
@@ -16,7 +15,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Quick Links */}
         <div>
           <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
           <ul className="space-y-2">
@@ -48,7 +46,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact Form */}
         <div>
           <h2 className="text-lg font-semibold mb-4">Contact Us</h2>
           <form>

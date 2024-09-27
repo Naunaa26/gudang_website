@@ -210,7 +210,6 @@ export default function SimpleMenuIcon() {
               </ListItemButton>
             </ListItem>
 
-            {/* New ListItem for "Semua Supplier" */}
             <ListItem disablePadding>
               <ListItemButton
                 component={Link}

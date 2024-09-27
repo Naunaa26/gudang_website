@@ -168,7 +168,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Makanan */}
             <div className="bg-green-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-green-100 p-4 rounded-full mb-4">
                 <FaUtensils className="text-4xl text-green-500" />
@@ -184,7 +183,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Minuman */}
             <div className="bg-red-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-red-100 p-4 rounded-full mb-4">
                 <FaGlassCheers className="text-4xl text-red-500" />
@@ -200,7 +198,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Mainan */}
             <div className="bg-pink-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-pink-100 p-4 rounded-full mb-4">
                 <FaPuzzlePiece className="text-4xl text-pink-500" />
@@ -216,7 +213,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Pakaian */}
             <div className="bg-purple-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-purple-100 p-4 rounded-full mb-4">
                 <FaTshirt className="text-4xl text-purple-500" />
@@ -232,7 +228,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Elektronik */}
             <div className="bg-gray-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-gray-100 p-4 rounded-full mb-4">
                 <FaIndustry className="text-4xl text-gray-500" />
@@ -248,7 +243,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Peralatan Rumah Tangga */}
             <div className="bg-teal-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-teal-100 p-4 rounded-full mb-4">
                 <FaTools className="text-4xl text-teal-500" />
@@ -264,7 +258,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Bahan Bangunan */}
             <div className="bg-orange-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-orange-100 p-4 rounded-full mb-4">
                 <FaHammer className="text-4xl text-orange-500" />
@@ -280,7 +273,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Obat-obatan dan Alat Kesehatan */}
             <div className="bg-indigo-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-indigo-100 p-4 rounded-full mb-4">
                 <FaFirstAid className="text-4xl text-indigo-500" />
@@ -296,7 +288,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Buku dan Alat Tulis */}
             <div className="bg-yellow-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-yellow-100 p-4 rounded-full mb-4">
                 <FaBook className="text-4xl text-yellow-500" />
@@ -312,7 +303,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Otomotif */}
             <div className="bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-gray-700 p-4 rounded-full mb-4">
                 <FaCar className="text-4xl text-gray-300" />
@@ -328,7 +318,6 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* Kosmetik dan Produk Perawatan Diri */}
             <div className="bg-pink-600 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="bg-pink-500 p-4 rounded-full mb-4">
                 <FaBlender className="text-4xl text-pink-200" />

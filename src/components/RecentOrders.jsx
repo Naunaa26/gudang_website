@@ -119,7 +119,6 @@ const RecentOrders = () => {
               ))}
             </tbody>
           </table>
-          {/* Pagination Controls */}
           <div className="flex justify-between items-center mt-4 sm:justify-center">
             <button
               className="px-4 py-2 text-white bg-gray-600 rounded-md hover:bg-gray-500 disabled:opacity-50 sm:mr-auto"
