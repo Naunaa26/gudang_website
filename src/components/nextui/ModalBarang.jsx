@@ -15,9 +15,20 @@ import {
   faTag,
   faMoneyBill,
   faBox,
+  faUtensils,
   faInfoCircle,
   faList,
   faCamera,
+  faTshirt,
+  faFlask,
+  faCar,
+  faBook,
+  faPills,
+  faHammer,
+  faCoffee,
+  faGamepad,
+  faCouch,
+  faTv,
 } from "@fortawesome/free-solid-svg-icons";
 import { supabase } from "../../../utils/SupaClient";
 import Swal from "sweetalert2";
@@ -40,16 +51,18 @@ export default function ModalBarang({ isOpen, onOpenChange }) {
   };
 
   const handleSelectChange = (value) => {
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       jenis_barang: value,
-    });
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       const { data, error } = await supabase.from("barang").insert([formData]);
+
       if (error) {
         console.error("Error inserting data:", error);
         Swal.fire({
@@ -74,6 +87,7 @@ export default function ModalBarang({ isOpen, onOpenChange }) {
               foto_barang: "",
             });
             onOpenChange(false);
+            window.location.reload();
           }
         });
       }
@@ -134,15 +148,46 @@ export default function ModalBarang({ isOpen, onOpenChange }) {
                 <Select
                   required
                   radius="sm"
-                  placeholder="Masukkan Jenis Barang"
-                  name="jenis_barang"
-                  value={formData.jenis_barang}
+                  placeholder="Pilih Jenis Barang"
+                  value={formData.jenis_barang} // Set the selected value here
                   onValueChange={handleSelectChange}
                   className="w-full sm:w-auto"
                 >
-                  <SelectItem value="makanan">Makanan</SelectItem>
-                  <SelectItem value="minuman">Minuman</SelectItem>
-                  <SelectItem value="mainan">Mainan</SelectItem>
+                  <SelectItem value="makanan">
+                    <FontAwesomeIcon icon={faUtensils} /> Makanan
+                  </SelectItem>
+                  <SelectItem value="minuman">
+                    <FontAwesomeIcon icon={faCoffee} /> Minuman
+                  </SelectItem>
+                  <SelectItem value="mainan">
+                    <FontAwesomeIcon icon={faGamepad} /> Mainan
+                  </SelectItem>
+                  <SelectItem value="pakaian">
+                    <FontAwesomeIcon icon={faTshirt} /> Pakaian
+                  </SelectItem>
+                  <SelectItem value="kosmetik">
+                    <FontAwesomeIcon icon={faFlask} /> Kosmetik dan Perawatan
+                    Diri
+                  </SelectItem>
+                  <SelectItem value="otomotif">
+                    <FontAwesomeIcon icon={faCar} /> Otomotif
+                  </SelectItem>
+                  <SelectItem value="buku">
+                    <FontAwesomeIcon icon={faBook} /> Buku dan Alat Tulis
+                  </SelectItem>
+                  <SelectItem value="obat">
+                    <FontAwesomeIcon icon={faPills} /> Obat-obatan dan Alat
+                    Kesehatan
+                  </SelectItem>
+                  <SelectItem value="bahan_bangunan">
+                    <FontAwesomeIcon icon={faHammer} /> Bahan Bangunan
+                  </SelectItem>
+                  <SelectItem value="peralatan_rumah">
+                    <FontAwesomeIcon icon={faCouch} /> Peralatan Rumah Tangga
+                  </SelectItem>
+                  <SelectItem value="elektronik">
+                    <FontAwesomeIcon icon={faTv} /> Elektronik
+                  </SelectItem>
                 </Select>
               </div>
 
@@ -184,7 +229,7 @@ export default function ModalBarang({ isOpen, onOpenChange }) {
                   <span>Deskripsi</span>
                 </div>
                 <Textarea
-                  placeholder="Enter your description"
+                  placeholder="Masukkan Deskripsi"
                   radius="sm"
                   name="deskripsi"
                   value={formData.deskripsi}

@@ -66,12 +66,6 @@ export default function TablePaginate({ allBarang }) {
               text: "Your file has been deleted.",
               icon: "success",
             });
-            const updatedBarang = allBarang.filter(
-              (barang) => barang.id !== id
-            );
-            setPage(1);
-
-            allBarang(updatedBarang);
           }
         } catch (error) {
           console.error("Error deleting barang:", error);
