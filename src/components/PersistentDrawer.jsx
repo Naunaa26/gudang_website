@@ -14,6 +14,7 @@ import { Link, useLocation } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import LogoIcon from "@mui/icons-material/Store";
 import ListItemButton from "@mui/material/ListItemButton";
+import { supabase } from "../../utils/SupaClient";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -26,10 +27,31 @@ export default function SimpleMenuIcon() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
+  const [isAdmin, setIsAdmin] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
+
+  const fetchUserRole = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data: roles } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+
+      setIsAdmin(roles?.role === "admin");
+    }
+  };
+
+  React.useEffect(() => {
+    fetchUserRole();
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -124,32 +146,69 @@ export default function SimpleMenuIcon() {
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding>
-              <ListItemButton
-                component={Link}
-                to="/tabel"
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  },
-                  borderRadius: "5px",
-                  backgroundColor:
-                    location.pathname === "/tabel"
-                      ? "rgba(255, 255, 255, 0.2)"
-                      : "transparent",
-                  color: location.pathname === "/tabel" ? "#FFD700" : "#fff",
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    color: location.pathname === "/tabel" ? "#FFD700" : "#fff",
-                  }}
-                >
-                  <FaTable />
-                </ListItemIcon>
-                <ListItemText primary="Tabel Barang" />
-              </ListItemButton>
-            </ListItem>
+            {isAdmin && (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={Link}
+                    to="/tabel"
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                      },
+                      borderRadius: "5px",
+                      backgroundColor:
+                        location.pathname === "/tabel"
+                          ? "rgba(255, 255, 255, 0.2)"
+                          : "transparent",
+                      color:
+                        location.pathname === "/tabel" ? "#FFD700" : "#fff",
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        color:
+                          location.pathname === "/tabel" ? "#FFD700" : "#fff",
+                      }}
+                    >
+                      <FaTable />
+                    </ListItemIcon>
+                    <ListItemText primary="Tabel Barang" />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={Link}
+                    to="/supplier"
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                      },
+                      borderRadius: "5px",
+                      backgroundColor:
+                        location.pathname === "/supplier"
+                          ? "rgba(255, 255, 255, 0.2)"
+                          : "transparent",
+                      color:
+                        location.pathname === "/supplier" ? "#FFD700" : "#fff",
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        color:
+                          location.pathname === "/supplier"
+                            ? "#FFD700"
+                            : "#fff",
+                      }}
+                    >
+                      <FaUsers />
+                    </ListItemIcon>
+                    <ListItemText primary="Tabel Supplier" />
+                  </ListItemButton>
+                </ListItem>
+              </>
+            )}
 
             <ListItem disablePadding>
               <ListItemButton
@@ -179,34 +238,6 @@ export default function SimpleMenuIcon() {
                   <FaBoxOpen />
                 </ListItemIcon>
                 <ListItemText primary="Semua Barang" />
-              </ListItemButton>
-            </ListItem>
-
-            <ListItem disablePadding>
-              <ListItemButton
-                component={Link}
-                to="/supplier"
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  },
-                  borderRadius: "5px",
-                  backgroundColor:
-                    location.pathname === "/supplier"
-                      ? "rgba(255, 255, 255, 0.2)"
-                      : "transparent",
-                  color: location.pathname === "/supplier" ? "#FFD700" : "#fff",
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    color:
-                      location.pathname === "/supplier" ? "#FFD700" : "#fff",
-                  }}
-                >
-                  <FaUsers />
-                </ListItemIcon>
-                <ListItemText primary="Supplier" />
               </ListItemButton>
             </ListItem>
 

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -16,6 +16,7 @@ import useFormatRupiah from "../hooks/useFormatRupiah.jsx";
 import useTruncateText from "../hooks/useTruncate";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaLock } from "react-icons/fa";
 import { supabase } from "../../utils/SupaClient";
 
 const getKeyValue = (obj, key) => {
@@ -32,12 +33,23 @@ const columns = [
   { key: "action", label: "Action" },
 ];
 
-export default function TablePaginate({ allBarang }) {
+export default function TablePaginate({ allBarang, setAllBarang }) {
   const [page, setPage] = useState(1);
+  const [session, setSession] = useState(null); // Add state for session
   const rowsPerPage = 5;
   const pages = Math.ceil(allBarang.length / rowsPerPage);
   const { formatRupiah } = useFormatRupiah();
   const { truncateText } = useTruncateText();
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setSession(session); // Set session state
+    };
+    fetchSession();
+  }, []);
 
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -57,6 +69,32 @@ export default function TablePaginate({ allBarang }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          // Fetch the barang data to get the image URL
+          const { data: barangData, error: fetchError } = await supabase
+            .from("barang")
+            .select("foto_barang")
+            .eq("id", id)
+            .single();
+
+          if (fetchError) {
+            console.error("Error fetching barang data:", fetchError);
+            return;
+          }
+
+          // Delete the image from the bucket
+          const imageUrl = barangData.foto_barang; // Assuming this is the image URL
+          const imageName = imageUrl.split("/").pop(); // Extracting the image name from the URL
+
+          const { error: deleteImageError } = await supabase.storage
+            .from("gambar_barang")
+            .remove([imageName]);
+
+          if (deleteImageError) {
+            console.error("Error deleting image:", deleteImageError);
+            return;
+          }
+
+          // Now delete the barang record
           const { error } = await supabase.from("barang").delete().eq("id", id);
           if (error) {
             console.error(error);
@@ -65,6 +103,8 @@ export default function TablePaginate({ allBarang }) {
               title: "Deleted!",
               text: "Your file has been deleted.",
               icon: "success",
+            }).then(() => {
+              window.location.reload();
             });
           }
         } catch (error) {
@@ -117,21 +157,29 @@ export default function TablePaginate({ allBarang }) {
                   />
                 ) : columnKey === "action" ? (
                   <div className="relative flex items-center gap-5">
-                    <Link to={`/edit/${item.id}`}>
-                      <Tooltip content="Ubah Barang">
-                        <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                          <EditIcon />
-                        </span>
-                      </Tooltip>
-                    </Link>
-                    <Tooltip color="danger" content="Hapus Barang">
-                      <span
-                        className="text-lg text-danger cursor-pointer active:opacity-50"
-                        onClick={() => deleteBarangById(item.id)}
-                      >
-                        <DeleteIcon />
+                    {session ? ( // Check if user is logged in
+                      <>
+                        <Link to={`/edit/${item.id}`}>
+                          <Tooltip content="Ubah Barang">
+                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                              <EditIcon />
+                            </span>
+                          </Tooltip>
+                        </Link>
+                        <Tooltip color="danger" content="Hapus Barang">
+                          <span
+                            className="text-lg text-danger cursor-pointer active:opacity-50"
+                            onClick={() => deleteBarangById(item.id)}
+                          >
+                            <DeleteIcon />
+                          </span>
+                        </Tooltip>
+                      </>
+                    ) : (
+                      <span className="flex items-center text-gray-500">
+                        <FaLock className="mr-2" /> Login to edit or delete
                       </span>
-                    </Tooltip>
+                    )}
                   </div>
                 ) : columnKey === "harga_barang" ? (
                   formatRupiah(getKeyValue(item, columnKey))

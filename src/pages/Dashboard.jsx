@@ -8,14 +8,14 @@ import {
   FaMoneyBillWave,
   FaBoxOpen,
   FaStar,
-  FaTshirt, // Add icon for Pakaian
-  FaPuzzlePiece, // Add icon for Mainan
-  FaTools, // Add icon for Peralatan Rumah Tangga
-  FaHammer, // Add icon for Bahan Bangunan
-  FaFirstAid, // Add icon for Obat-obatan
-  FaBook, // Add icon for Buku
-  FaCar, // Add icon for Otomotif
-  FaBlender, // Add icon for Kosmetik
+  FaTshirt,
+  FaPuzzlePiece,
+  FaTools,
+  FaHammer,
+  FaFirstAid,
+  FaBook,
+  FaCar,
+  FaBlender,
 } from "react-icons/fa";
 import { supabase } from "../../utils/SupaClient";
 import LoadingSkeleton from "../components/LoadingSkeleton";
@@ -52,15 +52,15 @@ const Dashboard = () => {
         const jenisBarang = [
           "makanan",
           "minuman",
-          "Mainan",
-          "Pakaian",
-          "Elektronik",
-          "Peralatan Rumah Tangga",
-          "Bahan Bangunan",
-          "Obat-obatan dan Alat Kesehatan",
-          "Buku dan Alat Tulis",
-          "Otomotif",
-          "Kosmetik dan Perawatan Diri",
+          "mainan",
+          "pakaian",
+          "elektronik",
+          "peralatan rumah tangga",
+          "bahan bangunan",
+          "obat-obatan dan alat kesehatan",
+          "buku dan alat tulis",
+          "otomotif",
+          "kosmetik dan perawatan diri",
         ];
         const jenisCountMap = {};
 
@@ -130,27 +130,11 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <>
+    <div className="dark:bg-[#140620] bg-[#124670] min-h-screen text-white">
       <Layout />
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-12 px-4 mb-10">
         {loading ? (
-          <>
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-            <LoadingSkeleton />
-          </>
+          Array(16).fill(<LoadingSkeleton />)
         ) : (
           <>
             <div className="bg-blue-500 bg-opacity-50 p-6 rounded-lg shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-transform duration-300 ease-in-out">
@@ -203,7 +187,7 @@ const Dashboard = () => {
                 <FaPuzzlePiece className="text-4xl text-pink-500" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Mainan"] || 0}
+                {jenisBarangCount["mainan"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Mainan
@@ -218,7 +202,7 @@ const Dashboard = () => {
                 <FaTshirt className="text-4xl text-purple-500" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Pakaian"] || 0}
+                {jenisBarangCount["pakaian"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Pakaian
@@ -233,7 +217,7 @@ const Dashboard = () => {
                 <FaIndustry className="text-4xl text-gray-500" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Elektronik"] || 0}
+                {jenisBarangCount["elektronik"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Elektronik
@@ -248,7 +232,7 @@ const Dashboard = () => {
                 <FaTools className="text-4xl text-teal-500" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Peralatan Rumah Tangga"] || 0}
+                {jenisBarangCount["peralatan rumah tangga"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Peralatan Rumah Tangga
@@ -263,7 +247,7 @@ const Dashboard = () => {
                 <FaHammer className="text-4xl text-orange-500" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Bahan Bangunan"] || 0}
+                {jenisBarangCount["bahan bangunan"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Bahan Bangunan
@@ -278,7 +262,7 @@ const Dashboard = () => {
                 <FaFirstAid className="text-4xl text-indigo-500" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Obat-obatan dan Alat Kesehatan"] || 0}
+                {jenisBarangCount["obat-obatan dan alat kesehatan"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Obat-obatan
@@ -293,7 +277,7 @@ const Dashboard = () => {
                 <FaBook className="text-4xl text-yellow-500" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Buku dan Alat Tulis"] || 0}
+                {jenisBarangCount["buku dan alat tulis"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Buku
@@ -308,7 +292,7 @@ const Dashboard = () => {
                 <FaCar className="text-4xl text-gray-300" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Otomotif"] || 0}
+                {jenisBarangCount["otomotif"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Otomotif
@@ -323,7 +307,7 @@ const Dashboard = () => {
                 <FaBlender className="text-4xl text-pink-200" />
               </div>
               <p className="text-base sm:text-sm font-bold text-white">
-                {jenisBarangCount["Kosmetik dan Perawatan Diri"] || 0}
+                {jenisBarangCount["kosmetik dan perawatan diri"] || 0}
               </p>
               <h2 className="text-xl sm:text-lg font-semibold mb-2 text-white">
                 Kosmetik
@@ -381,7 +365,7 @@ const Dashboard = () => {
         )}
       </section>
       <RecentOrders />
-    </>
+    </div>
   );
 };
 

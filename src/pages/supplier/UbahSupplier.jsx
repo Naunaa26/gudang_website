@@ -7,6 +7,7 @@ import {
   faUser,
   faEnvelope,
   faPhone,
+  faLink,
 } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "@nextui-org/react";
 import Swal from "sweetalert2";
@@ -22,6 +23,7 @@ const UbahSupplier = () => {
     email: "",
     no_hp: "",
     alamat: "",
+    logo_supplier: "", // Add this for logo URL handling
   });
   const [loading, setLoading] = useState(true);
 
@@ -59,6 +61,7 @@ const UbahSupplier = () => {
           email: formEdit.email,
           no_hp: formEdit.no_hp,
           alamat: formEdit.alamat,
+          logo_supplier: formEdit.logo_supplier, // Include logo URL
         })
         .eq("id", id);
       if (error) throw error;
@@ -145,11 +148,11 @@ const UbahSupplier = () => {
             </div>
             <div className="form-group">
               <label
-                htmlFor="no hp"
+                htmlFor="no_hp"
                 className="text-sm font-medium text-gray-300 flex items-center"
               >
                 <FontAwesomeIcon icon={faPhone} className="mr-2" />
-                no hp
+                No HP
               </label>
               <input
                 type="tel"
@@ -176,6 +179,24 @@ const UbahSupplier = () => {
                 value={formEdit.alamat}
                 onChange={handleChange}
               ></textarea>
+            </div>
+            <div className="form-group">
+              <label
+                htmlFor="logo_supplier"
+                className="text-sm font-medium text-gray-300 flex items-center"
+              >
+                <FontAwesomeIcon icon={faLink} className="mr-2" />
+                Logo Supplier (URL)
+              </label>
+              <input
+                type="text"
+                id="logo_supplier"
+                name="logo_supplier"
+                placeholder="Masukkan URL logo supplier"
+                className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-800 text-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                value={formEdit.logo_supplier}
+                onChange={handleChange}
+              />
             </div>
             <button
               type="submit"

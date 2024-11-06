@@ -64,7 +64,7 @@ export default function TableSupplier({ allSuppliers, refreshSuppliers }) {
               text: "The supplier has been deleted.",
               icon: "success",
             });
-            refreshSuppliers(); // Call refresh function to reload supplier data
+            refreshSuppliers();
           }
         } catch (error) {
           console.error("Error deleting supplier:", error);

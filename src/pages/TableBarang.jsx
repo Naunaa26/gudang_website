@@ -5,6 +5,8 @@ import { Spinner } from "@nextui-org/spinner";
 import { supabase } from "../../utils/SupaClient";
 import ModalBarang from "../components/nextui/ModalBarang";
 import { FaSearch } from "react-icons/fa";
+import { useAuth } from "../auth/AuthProvider";
+import { Link } from "react-router-dom";
 
 const TableBarang = () => {
   const [allBarang, setAllBarang] = useState([]);
@@ -30,6 +32,8 @@ const TableBarang = () => {
       setLoading(false);
     }
   };
+
+  const { user, role } = useAuth();
 
   useEffect(() => {
     getAllBarang();
@@ -74,17 +78,29 @@ const TableBarang = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-white">
               Table Barang
             </h2>
-            <Button
-              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md"
-              onPress={onOpen}
-            >
-              + Tambah Barang
-            </Button>
-            <ModalBarang
-              isOpen={isOpen}
-              onOpenChange={onOpenChange}
-              onOpen={onOpen}
-            />
+            {user && role === "admin" ? (
+              <>
+                <Button
+                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md"
+                  onPress={onOpen}
+                >
+                  + Tambah Barang
+                </Button>
+                <ModalBarang
+                  isOpen={isOpen}
+                  onOpenChange={onOpenChange}
+                  onOpen={onOpen}
+                />
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button className="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-400 hover:to-purple-500 text-white font-semibold py-2 px-4 rounded-md">
+                    Login Sebagai Admin
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="flex flex-col sm:flex-row mb-5 gap-4">
@@ -118,24 +134,23 @@ const TableBarang = () => {
               <option value="">Filter by Category</option>
               <option value="makanan">Makanan</option>
               <option value="minuman">Minuman</option>
-              <option value="Mainan">Mainan</option>
-              <option value="Pakaian">Pakaian</option>
-              <option value="Elektronik">Elektronik</option>
-              <option value="Peralatan Rumah Tangga">
+              <option value="mainan">Mainan</option>
+              <option value="pakaian">Pakaian</option>
+              <option value="elektronik">Elektronik</option>
+              <option value="peralatan rumah tangga">
                 Peralatan Rumah Tangga
               </option>
-              <option value="Bahan Bangunan">Bahan Bangunan</option>
-              <option value="Kosmetik Perawatan Diri">
+              <option value="bahan bangunan">Bahan Bangunan</option>
+              <option value="kosmetik perawatan diri">
                 Kosmetik dan Produk Perawatan Diri
               </option>
-              <option value="Obat-obatan dan Alat Kesehatan">
+              <option value="obat-obatan dan alat kesehatan">
                 Obat-obatan dan Alat Kesehatan
               </option>
-              <option value="Buku dan Alat Tulis">Buku dan Alat Tulis</option>
-              <option value="Otomotif">Otomotif</option>
+              <option value="buku dan alat tulis">Buku dan Alat Tulis</option>
+              <option value="otomotif">Otomotif</option>
             </select>
 
-            {/* Rows Per Page Select */}
             <select
               onChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
               className="p-2 text-sm sm:text-base rounded-md text-white bg-gray-800 border border-gray-700 w-full sm:w-1/4"

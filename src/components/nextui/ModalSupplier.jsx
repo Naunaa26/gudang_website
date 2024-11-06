@@ -1,13 +1,4 @@
 import React, { useState } from "react";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Input,
-} from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -15,6 +6,9 @@ import {
   faEnvelope,
   faPhone,
   faImage,
+  faWarehouse,
+  faShoppingCart,
+  faCogs,
 } from "@fortawesome/free-solid-svg-icons";
 import { supabase } from "../../../utils/SupaClient";
 import Swal from "sweetalert2";
@@ -26,7 +20,15 @@ const ModalSupplier = ({ isOpen, onOpenChange }) => {
     email: "",
     no_hp: "",
     logo_supplier: "",
+    kategori: "wholesale", // Default category
   });
+
+  // Define icons for each category
+  const categoryIcons = {
+    wholesale: faWarehouse,
+    retail: faShoppingCart,
+    service: faCogs,
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -43,37 +45,32 @@ const ModalSupplier = ({ isOpen, onOpenChange }) => {
         .insert([formData]);
 
       if (error) {
-        console.error("Error inserting data:", error);
         Swal.fire({
           title: "Gagal!",
           text: "Gagal Menambahkan Supplier Ke Database.",
           icon: "error",
         });
       } else {
-        console.log("Data inserted successfully:", data);
         Swal.fire({
           title: "Berhasil!",
           text: "Berhasil Menambahkan Supplier Ke Database!",
           icon: "success",
         }).then((result) => {
           if (result.isConfirmed) {
-            // Reset form data
             setFormData({
               nama_supplier: "",
               alamat: "",
               email: "",
               no_hp: "",
               logo_supplier: "",
+              kategori: "wholesale",
             });
-            // Close the modal
             onOpenChange(false);
-            // Reload the page
-            window.location.reload(); // This will refresh the page
+            window.location.reload();
           }
         });
       }
     } catch (error) {
-      console.error("Error:", error);
       Swal.fire({
         title: "Error!",
         text: "An unexpected error occurred.",
@@ -82,111 +79,125 @@ const ModalSupplier = ({ isOpen, onOpenChange }) => {
     }
   };
 
-  return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl">
-      <ModalContent className="bg-[#18181B] max-h-[90vh] overflow-y-auto">
-        <ModalHeader className="text-white">Tambah Supplier</ModalHeader>
+  return isOpen ? (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out">
+      <div className="bg-[#18181B] w-full max-w-3xl p-6 rounded-lg shadow-lg max-h-[90vh] overflow-y-auto animate-fade-in">
+        <h2 className="text-white text-2xl mb-4">Tambah Supplier</h2>
         <form onSubmit={handleSubmit}>
-          <ModalBody>
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col">
-                <div className="flex items-center text-white gap-2 mb-2">
-                  <FontAwesomeIcon icon={faUser} />
-                  <span>Nama Supplier</span>
-                </div>
-                <Input
-                  type="text"
-                  placeholder="Masukkan Nama Supplier"
-                  labelPlacement="outside"
-                  name="nama_supplier"
-                  value={formData.nama_supplier}
-                  onChange={handleChange}
-                  className="w-full sm:w-auto"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <div className="flex items-center text-white gap-2 mb-2">
-                  <FontAwesomeIcon icon={faBuilding} />
-                  <span>Alamat</span>
-                </div>
-                <Input
-                  type="text"
-                  placeholder="Masukkan Alamat"
-                  labelPlacement="outside"
-                  name="alamat"
-                  value={formData.alamat}
-                  onChange={handleChange}
-                  className="w-full sm:w-auto"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <div className="flex items-center text-white gap-2 mb-2">
-                  <FontAwesomeIcon icon={faEnvelope} />
-                  <span>Email</span>
-                </div>
-                <Input
-                  type="email"
-                  placeholder="Masukkan Email"
-                  labelPlacement="outside"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full sm:w-auto"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <div className="flex items-center text-white gap-2 mb-2">
-                  <FontAwesomeIcon icon={faPhone} />
-                  <span>No HP</span>
-                </div>
-                <Input
-                  type="tel"
-                  placeholder="Masukkan Nomor HP"
-                  labelPlacement="outside"
-                  name="no_hp"
-                  value={formData.no_hp}
-                  onChange={handleChange}
-                  className="w-full sm:w-auto"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <div className="flex items-center text-white gap-2 mb-2">
-                  <FontAwesomeIcon icon={faImage} />
-                  <span>Link Gambar</span>
-                </div>
-                <Input
-                  type="text"
-                  placeholder="Masukkan Link Gambar"
-                  labelPlacement="outside"
-                  name="logo_supplier"
-                  value={formData.logo_supplier}
-                  onChange={handleChange}
-                  className="w-full sm:w-auto"
-                />
-              </div>
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col">
+              <label className="flex items-center text-white gap-2 mb-2">
+                <FontAwesomeIcon icon={faUser} />
+                <span>Nama Supplier</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan Nama Supplier"
+                name="nama_supplier"
+                value={formData.nama_supplier}
+                onChange={handleChange}
+                className="w-full p-2 rounded bg-gray-800 text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:outline-none"
+              />
             </div>
-          </ModalBody>
-          <ModalFooter className="flex flex-col sm:flex-row">
-            <Button
-              color="danger"
-              variant="solid"
-              onPress={() => onOpenChange(false)}
-              className="w-full sm:w-auto mb-2 sm:mb-0"
+
+            {/* Kategori Dropdown with Icon */}
+            <div className="flex flex-col">
+              <label className="flex items-center text-white gap-2 mb-2">
+                <FontAwesomeIcon icon={categoryIcons[formData.kategori]} />
+                <span>Kategori</span>
+              </label>
+              <select
+                name="kategori"
+                value={formData.kategori}
+                onChange={handleChange}
+                className="w-full p-2 rounded bg-gray-800 text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:outline-none"
+              >
+                <option value="wholesale">Wholesale</option>
+                <option value="retail">Retail</option>
+                <option value="service">Service</option>
+              </select>
+            </div>
+
+            {/* Other form fields */}
+            <div className="flex flex-col">
+              <label className="flex items-center text-white gap-2 mb-2">
+                <FontAwesomeIcon icon={faBuilding} />
+                <span>Alamat</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan Alamat"
+                name="alamat"
+                value={formData.alamat}
+                onChange={handleChange}
+                className="w-full p-2 rounded bg-gray-800 text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:outline-none"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="flex items-center text-white gap-2 mb-2">
+                <FontAwesomeIcon icon={faEnvelope} />
+                <span>Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="Masukkan Email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-2 rounded bg-gray-800 text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:outline-none"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="flex items-center text-white gap-2 mb-2">
+                <FontAwesomeIcon icon={faPhone} />
+                <span>No HP</span>
+              </label>
+              <input
+                type="tel"
+                placeholder="Masukkan Nomor HP"
+                name="no_hp"
+                value={formData.no_hp}
+                onChange={handleChange}
+                className="w-full p-2 rounded bg-gray-800 text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:outline-none"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="flex items-center text-white gap-2 mb-2">
+                <FontAwesomeIcon icon={faImage} />
+                <span>Link Gambar</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Masukkan Link Gambar"
+                name="logo_supplier"
+                value={formData.logo_supplier}
+                onChange={handleChange}
+                className="w-full p-2 rounded bg-gray-800 text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:outline-none"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end gap-4 mt-6">
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500 transition-all duration-300 ease-in-out"
             >
               Close
-            </Button>
-            <Button color="primary" type="submit" className="w-full sm:w-auto">
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition-all duration-300 ease-in-out"
+            >
               Tambah Supplier
-            </Button>
-          </ModalFooter>
+            </button>
+          </div>
         </form>
-      </ModalContent>
-    </Modal>
-  );
+      </div>
+    </div>
+  ) : null;
 };
 
 export default ModalSupplier;
